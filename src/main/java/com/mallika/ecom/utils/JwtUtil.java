@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    public static final String SECRET = "piglet1234";
+    public static final String SECRET = "9a4f2c8d3b7a1e6f45c8a0b3f267d8b1d4e6f3c8a9d2b5f8e3a9c8b5f6v8a3d9";
 
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
