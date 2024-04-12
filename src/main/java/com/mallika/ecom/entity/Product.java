@@ -1,6 +1,7 @@
 package com.mallika.ecom.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mallika.ecom.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -29,4 +30,15 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnore
     private Category category;
+
+    public ProductDto getDto() {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(id);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setDescription(description);
+        productDto.setByteImg(img);
+        productDto.setCategoryId(category.getId());
+        return productDto;
+    }
 }
