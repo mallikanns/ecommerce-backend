@@ -5,6 +5,7 @@ import com.mallika.ecom.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -25,8 +26,8 @@ public class Product {
     @Column(columnDefinition = "longblob")
     private byte[] img;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
-//    @OnDelete(action = onDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnore
     private Category category;
