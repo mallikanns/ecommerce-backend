@@ -38,6 +38,6 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<CartItems> cartItems;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+//    private List<CartItems> cartItems;
 }
