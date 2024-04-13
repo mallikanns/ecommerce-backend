@@ -25,7 +25,7 @@ public class Product {
     @Column(columnDefinition = "longblob")
     private byte[] img;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
 //    @OnDelete(action = onDeleteAction.CASCADE)
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnore
@@ -39,6 +39,7 @@ public class Product {
         productDto.setDescription(description);
         productDto.setByteImg(img);
         productDto.setCategoryId(category.getId());
+        productDto.setCategoryName(category.getName());
         return productDto;
     }
 }
