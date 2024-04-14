@@ -2,6 +2,9 @@ package com.mallika.ecom.services.customer.cart;
 
 
 import com.mallika.ecom.dto.AddProductInCartDto;
+
+import com.mallika.ecom.dto.CartItemsDto;
+import com.mallika.ecom.dto.OrderDto;
 import com.mallika.ecom.entity.CartItems;
 import com.mallika.ecom.entity.Order;
 import com.mallika.ecom.entity.Product;
@@ -16,7 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -64,5 +71,30 @@ public class CartServiceImpl implements CartService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or product not found");
             }
         }
+    }
+
+    public OrderDto getCartByUserId(Long userId) {
+        Order activeOrder = orderRepository.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
+//        List<CartItemsDto> cartItemsDtoList = activeOrder.getCartItems().stream().map(CartItems::getCartDto).collect(Collectors.toList());
+//        because comment private List<CartItems> cartItems; in Order Entity so use method below instead
+
+//        method 1 get form CartItems but can be null
+//        List<CartItemsDto> cartItemsDtoList = cartItemsRepository.findByOrderId(activeOrder.getId()).get().stream().map(CartItems::getCartDto).collect(Collectors.toList());
+
+//        method 2 check null by .isPresent()
+        Optional<List<CartItems>> cartItemsList = cartItemsRepository.findByOrderId(activeOrder.getId());
+        List<CartItemsDto> cartItemsDtoList = new ArrayList<>();
+        if (cartItemsList.isPresent()) {
+            cartItemsDtoList = cartItemsList.get().stream().map(CartItems::getCartDto).toList();
+        }
+        OrderDto orderDto = new OrderDto();
+        orderDto.setAmount(activeOrder.getAmount());
+        orderDto.setId(activeOrder.getId());
+        orderDto.setOrderStatus(activeOrder.getOrderStatus());
+        orderDto.setDiscount(activeOrder.getDiscount());
+        orderDto.setTotalAmount(activeOrder.getTotalAmount());
+        orderDto.setCartItems(cartItemsDtoList);
+
+        return orderDto;
     }
 }

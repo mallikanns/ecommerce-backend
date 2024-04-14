@@ -1,5 +1,6 @@
 package com.mallika.ecom.entity;
 
+import com.mallika.ecom.dto.CartItemsDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -29,5 +30,20 @@ public class CartItems {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "order_id")
     private Order order;
+
+    public CartItemsDto getCartDto() {
+        CartItemsDto cartItemsDto = new CartItemsDto();
+        cartItemsDto.setId(id);
+        cartItemsDto.setPrice(price);
+        cartItemsDto.setProductId(product.getId());
+        cartItemsDto.setQuantity(quantity);
+        cartItemsDto.setUserId(user.getId());
+        cartItemsDto.setProductName(product.getName());
+        cartItemsDto.setReturnedImg(product.getImg());
+
+        return cartItemsDto;
+    }
 }
