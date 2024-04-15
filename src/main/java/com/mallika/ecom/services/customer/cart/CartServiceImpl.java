@@ -77,12 +77,13 @@ public class CartServiceImpl implements CartService {
 //        method 1 get form CartItems but can be null
 //        List<CartItemsDto> cartItemsDtoList = cartItemsRepository.findByOrderId(activeOrder.getId()).get().stream().map(CartItems::getCartDto).collect(Collectors.toList());
 
-//        method 2 check null by .isPresent()
+//        method 2 get form CartItems & check null by .isPresent()
         Optional<List<CartItems>> cartItemsList = cartItemsRepository.findByOrderId(activeOrder.getId());
         List<CartItemsDto> cartItemsDtoList = new ArrayList<>();
         if (cartItemsList.isPresent()) {
             cartItemsDtoList = cartItemsList.get().stream().map(CartItems::getCartDto).toList();
         }
+
         OrderDto orderDto = new OrderDto();
         orderDto.setAmount(activeOrder.getAmount());
         orderDto.setId(activeOrder.getId());
