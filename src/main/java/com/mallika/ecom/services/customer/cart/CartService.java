@@ -2,6 +2,7 @@ package com.mallika.ecom.services.customer.cart;
 
 import com.mallika.ecom.dto.AddProductInCartDto;
 import com.mallika.ecom.dto.OrderDto;
+import com.mallika.ecom.dto.PlaceOrderDto;
 import org.springframework.http.ResponseEntity;
 
 public interface CartService {
@@ -14,4 +15,6 @@ public interface CartService {
     OrderDto increaseProductQuantity(AddProductInCartDto addProductInCartDto);
 
     OrderDto decreaseProductQuantity(AddProductInCartDto addProductInCartDto);
+
+    OrderDto placeOrder(PlaceOrderDto placeOrderDto);
 }

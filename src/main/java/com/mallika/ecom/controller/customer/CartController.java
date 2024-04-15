@@ -2,6 +2,7 @@ package com.mallika.ecom.controller.customer;
 
 import com.mallika.ecom.dto.AddProductInCartDto;
 import com.mallika.ecom.dto.OrderDto;
+import com.mallika.ecom.dto.PlaceOrderDto;
 import com.mallika.ecom.exceptions.ValidationException;
 import com.mallika.ecom.services.customer.cart.CartService;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,10 @@ public class CartController {
     @PostMapping("/deduction")
     public ResponseEntity<OrderDto> decreaseProductQuantity(@RequestBody AddProductInCartDto addProductInCartDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cartService.decreaseProductQuantity(addProductInCartDto));
+    }
+
+    @PostMapping("/placeOrder")
+    public ResponseEntity<OrderDto> placeOrder(@RequestBody PlaceOrderDto placeOrderDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.placeOrder(placeOrderDto));
     }
 }
