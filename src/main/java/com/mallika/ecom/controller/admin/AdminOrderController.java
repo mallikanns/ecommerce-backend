@@ -1,5 +1,6 @@
 package com.mallika.ecom.controller.admin;
 
+import com.mallika.ecom.dto.AnalyticsResponse;
 import com.mallika.ecom.dto.OrderDto;
 import com.mallika.ecom.services.admin.adminOrder.AdminOrderService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,10 @@ public class AdminOrderController {
             return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
+    }
+
+    @GetMapping("/order/analytics")
+    public ResponseEntity<AnalyticsResponse> getAnalytics() {
+        return ResponseEntity.ok(adminOrderService.calculateAnalytics());
     }
 }
